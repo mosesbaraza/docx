@@ -12,31 +12,6 @@ eg
 obj = DocxFile('/path/to/docx/file')
 
 
- expandDocxFile()
- ----------------
- This method is invoked in every creation of an instance of the DocxFile. This method extracts all the constituent .xml files from the .docx file, targeting two specific files: core.xml (contains inormation like date of creation, and name of creator) and document.xml(this contain the text strings in the document)
-
- createdby()
- -----------
- This method returns creator_name(the user account name) as a string
-
- modifiedby()
- -------------
- This method returns name of the one who modified the file
-
- creationdatetime()
- ------------------
- This returns datetimestamp of the file creation
-
- modifydatetime()
- ----------------
- This method returns datetime stamp of the file modification
-
- readdocx()
- ----------
- This method returns a list of the content of the .docx document
-
-
  Dependency libraries include:
  1.)zipfile
  2.)xml

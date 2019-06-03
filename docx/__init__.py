@@ -1,5 +1,4 @@
 from xml.etree import ElementTree as ET
-import zipfile
 
 
 class DocxFile: #class that will create an object to capture file to be read
@@ -9,8 +8,13 @@ class DocxFile: #class that will create an object to capture file to be read
 
     @property
     def docxstream(self):  #attribute that provides the filestream of the docx file
-        docx_stream = zipfile.ZipFile(self.filename)
-        return docx_stream
+        try:
+            import zipfile
+        except ImportError:
+            raise ImportError('Failed to import zipfile')
+        else:
+            docx_stream = zipfile.ZipFile(self.filename)
+            return docx_stream
 
     def docxread(self): #method to read the content of docx file and returns a list of lines within the file
         txt_list=[]
@@ -22,3 +26,4 @@ class DocxFile: #class that will create an object to capture file to be read
                 pass
 
         return txt_list
+

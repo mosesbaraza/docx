@@ -5,11 +5,7 @@
 class DocxFile:
     def __init__(self, docx_name):
         self.docx_name=docx_name
-        #self.creator_name=''
-        #self.file_modified_by=''
-        #self.file_creation_date=''
-        #self.file_modified_date=''
-        self.expandDocxFile()
+        self.expandDocxFile() #method to expand word document
 
     def expandDocxFile(self):
         import zipfile
@@ -61,6 +57,3 @@ class DocxFile:
     def readdocx(self):
         return self.text_list
 
-#x=DocxFile('C:\\Users\\coder\\Desktop\\SAKINA FLORENCE BARAZA.docx')
-#x.expandDocxFile()
-#print(x.readdocx())

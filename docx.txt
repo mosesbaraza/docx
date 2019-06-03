@@ -11,6 +11,11 @@ This class is instantiated by a path to the .docx file as a string.
 eg
 obj = DocxFile('/path/to/docx/file')
 
+method docxread
+---------------
+docxread iterates through word document returning all its text content as a list
+print(obj.docxread())
+
 
  Dependency libraries include:
  1.)zipfile

@@ -1,4 +1,5 @@
 from xml.etree import ElementTree as ET
+import zipfile
 
 
 class DocxFile: #class that will create an object to capture file to be read
@@ -16,7 +17,7 @@ class DocxFile: #class that will create an object to capture file to be read
             docx_stream = zipfile.ZipFile(self.filename)
             return docx_stream
 
-    def docxread(self): #method to read the content of docx file and returns a list of lines within the file
+    def read(self): #method to read the content of docx file and returns a list of lines within the file
         txt_list=[]
         xmlstream=ET.fromstring(self.docxstream.read('word/document.xml').decode(encoding='utf-8')) #word/documents.xml contains the content of the .docx file
         for element in xmlstream.iter():
@@ -27,3 +28,47 @@ class DocxFile: #class that will create an object to capture file to be read
 
         return txt_list
 
+    def creator(self):
+        xmlstream=ET.fromstring(self.docxstream.read('docProps/core.xml').decode(encoding='utf-8'))
+        for element in xmlstream.iter():
+            if element.tag=='{http://purl.org/dc/elements/1.1/}creator':
+                return element.text
+            else:
+                pass
+
+    def lastmodifiedby(self):
+        xmlstream=ET.fromstring(self.docxstream.read('docProps/core.xml').decode(encoding='utf-8'))
+        for element in xmlstream.iter():
+            if element.tag=='{http://schemas.openxmlformats.org/package/2006/metadata/core-properties}lastModifiedBy':
+                return element.text
+            else:
+                pass
+
+    def datetimecreated(self):
+        xmlstream=ET.fromstring(self.docxstream.read('docProps/core.xml').decode(encoding='utf-8'))
+        for element in xmlstream.iter():
+            if element.tag=='{http://purl.org/dc/terms/}created':
+                return element.text
+            else:
+                pass
+
+    def datetimemodified(self):
+        xmlstream=ET.fromstring(self.docxstream.read('docProps/core.xml').decode(encoding='utf-8'))
+        for element in xmlstream.iter():
+            if element.tag=='{http://purl.org/dc/terms/}modified':
+                return element.text
+            else:
+                pass
+
+    def docxstat(self):
+        stat = dict(zip(['creator', 'last_modified_by', 'datetime_created', 'datetime_modified'], [self.creator(), self.lastmodifiedby(), self.datetimecreated(), self.datetimemodified()]))
+        return stat
+
+
+#path_='/home/moses/Documents/doc/seth.docx'
+#x=DocxFile(path_)
+#print(x.creator())
+#print(x.lastmodifiedby())
+#print(x.datetimecreated())
+#print(x.datetimemodified())
+#print(x.docxstat())

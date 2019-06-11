@@ -1,5 +1,4 @@
 from xml.etree import ElementTree as ET
-import zipfile
 
 
 class DocxFile: #class that will create an object to capture file to be read
@@ -28,7 +27,7 @@ class DocxFile: #class that will create an object to capture file to be read
 
         return txt_list
 
-    def creator(self):
+    def creator(self): #get the original creator of the document
         xmlstream=ET.fromstring(self.docxstream.read('docProps/core.xml').decode(encoding='utf-8'))
         for element in xmlstream.iter():
             if element.tag=='{http://purl.org/dc/elements/1.1/}creator':
@@ -36,7 +35,7 @@ class DocxFile: #class that will create an object to capture file to be read
             else:
                 pass
 
-    def lastmodifiedby(self):
+    def lastmodifiedby(self): #get the user to last modify the document
         xmlstream=ET.fromstring(self.docxstream.read('docProps/core.xml').decode(encoding='utf-8'))
         for element in xmlstream.iter():
             if element.tag=='{http://schemas.openxmlformats.org/package/2006/metadata/core-properties}lastModifiedBy':
@@ -44,7 +43,7 @@ class DocxFile: #class that will create an object to capture file to be read
             else:
                 pass
 
-    def datetimecreated(self):
+    def datetimecreated(self): #return the datetime of document creation
         xmlstream=ET.fromstring(self.docxstream.read('docProps/core.xml').decode(encoding='utf-8'))
         for element in xmlstream.iter():
             if element.tag=='{http://purl.org/dc/terms/}created':
@@ -52,7 +51,7 @@ class DocxFile: #class that will create an object to capture file to be read
             else:
                 pass
 
-    def datetimemodified(self):
+    def datetimemodified(self): #return the datetime of file modification
         xmlstream=ET.fromstring(self.docxstream.read('docProps/core.xml').decode(encoding='utf-8'))
         for element in xmlstream.iter():
             if element.tag=='{http://purl.org/dc/terms/}modified':
@@ -60,7 +59,7 @@ class DocxFile: #class that will create an object to capture file to be read
             else:
                 pass
 
-    def docxstat(self):
+    def docxstat(self): #return a dictionary of the document statistics
         stat = dict(zip(['creator', 'last_modified_by', 'datetime_created', 'datetime_modified'], [self.creator(), self.lastmodifiedby(), self.datetimecreated(), self.datetimemodified()]))
         return stat
 

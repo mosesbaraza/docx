@@ -15,6 +15,14 @@ class DocxFile:
             zp.extractall(".")
         zp.close()
 
+    def makedocx(self):
+        with zipfile.ZipFile(self.file, 'w') as strm:
+            for data in os.walk("."):
+                for direntry in os.scandir(data[0]):
+                    strm.write(direntry.path)
+
+        strm.close()
+
     def changecreator(self, name):
         xmlstream=ET.parse('docProps/core.xml')
         for element in xmlstream.iter():
@@ -26,14 +34,17 @@ class DocxFile:
         os.remove(self.file)
         xmlstream.write('docProps/core.xml')
 
-        with zipfile.ZipFile(self.file, 'w') as strm:
-            for data in os.walk("."):
-                for direntry in os.scandir(data[0]):
-                    strm.write(direntry.path)
+        self.makedocx()
 
-        strm.close()
+    def changedatetimecreated(self, datetime):
+        xmlstream=ET.parse('docProps/core.xml')
+        for element in xmlstream.iter():
+            if element.tag=="http://purl.org/dc/terms/}created":
+                element.text=name
+            else:
+                pass
+        os.remove('docProps/core.xml')
+        os.remove(self.file)
+        xmlstream.write('docProps/core.xml')
 
-x=DocxFile('/home/moses/Documents/doc/seth.docx')
-x.changecreator('Maina')
-
-    
+        self.makedocx()

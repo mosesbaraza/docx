@@ -37,6 +37,25 @@ method docxstat()
 obj.docxstat() #returns a dictionary of creator, lastmodifiedby, datetimecreated, datetimemodified
 
 
+June 18, 2019 update
+--------------------
+separated the module files from the __init__ file. __init__ now contains only import statements for
+docxfile and docxmodify modules
+
+docxmodify
+----------
+Contains class DocxFile that is used to initialize an object with a path to MS-word document
+
+docxetractor()
+--------------
+A method initialized after creating a contructor object. It extracts all files from docx file to a temporary directory.
+
+changecreator(name)
+------------------
+changes the name of the document creator
+
+
+
  Dependency libraries include:
  1.)zipfile
  2.)xml
